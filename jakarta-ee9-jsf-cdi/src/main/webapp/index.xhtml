@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!-- For JakartaEE 8 version and previous
+    html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta charset="UTF-8" />
+    <title>#{title}</title>
+</h:head>
+<h:body>
+    <h1>#{h1}</h1>
+    <h3><h:outputText value="#{h1}" /></h3>
+
+    <h:dataTable value="#{productList}" var="product">
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Id" />
+            </f:facet>
+            <h:outputText value="#{product.id}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Name" />
+            </f:facet>
+            <h:outputText value="#{product.name}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="SKU" />
+            </f:facet>
+            <h:outputText value="#{product.sku}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Price" />
+            </f:facet>
+            <h:outputText value="#{product.price}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Registry Date" />
+            </f:facet>
+            <h:outputText value="#{product.registryDate}" />
+        </h:column>
+    </h:dataTable>
+</h:body>
+</html>
