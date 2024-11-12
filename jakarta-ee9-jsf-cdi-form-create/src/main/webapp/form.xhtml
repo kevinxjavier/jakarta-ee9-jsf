@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!-- For JakartaEE 8 version and previous
+    html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta charset="UTF-8" />
+    <title>Form Product | #{title}</title>
+</h:head>
+<h:body>
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{productController.id}" />
+        <!-- Getting <f:param name="id" value="#{p.id}" /> From index.xhtml and Setting to ProductController.id  -->
+    </f:metadata>
+
+    <h:messages style="color: red;" />
+
+    <h:panelGrid border="1">
+
+        <f:facet name="header">
+            #{h1}
+            <br/>
+            <h:outputText value="Form Product | #{h1}" />
+        </f:facet>
+
+        <h:link outcome="index" value="Back" /><!-- Use a method get -->
+
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Name" for="name" />
+                <h:inputText id="name" value="#{product.name}" required="true" label="Name" /><!-- #{product.name} calls method product() just 1 time -->
+
+                <h:outputLabel value="Price" for="price" />
+                <h:inputText id="price" value="#{product.price}" required="true" label="Price" />
+
+                <h:outputLabel value="Sku" for="sku" />
+                <h:inputText id="sku" value="#{product.sku}" required="true" label="SKU" />
+
+                <h:outputLabel value="Date" for="registryDate" />
+                <h:inputText id="registryDate" value="#{product.registryDate}" label="Registry Date" required="true" converterMessage="Valid format date yyyy-MM-dd">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+                    <f:passThroughAttribute name="placeholder" value="yyyy-MM-dd" />
+                    <!--f:passThroughAttribute name="type" value="date" /-->
+                </h:inputText>
+
+                <h:commandButton value="#{product.id > 0 ? 'Update' : Create}" action="#{productController.save}" />
+                <h:inputHidden value="#{product.id}" />
+                <!-- h:inputHidden value="#{product.registryDate}" / -->
+            </h:panelGrid>
+        </h:form>
+
+    </h:panelGrid>
+</h:body>
+</html>

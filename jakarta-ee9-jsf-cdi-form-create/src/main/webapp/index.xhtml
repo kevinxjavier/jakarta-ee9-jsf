@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!-- For JakartaEE 8 version and previous
+    html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta charset="UTF-8" />
+    <title>#{title}</title>
+</h:head>
+<h:body>
+    <h:panelGrid border="1">
+
+        <f:facet name="header">
+            #{h1}
+            <br/>
+            <h:outputText value="#{h1}" />
+        </f:facet>
+
+        <h:form id="createFrm">
+            <h:commandButton value="Create Product" action="form.xhtml" />
+            <br/>
+            <h:commandLink value="Create Product" action="form.xhtml" /><!-- Use a method post -->
+        </h:form>
+
+        <h:outputText value="No items was found!" rendered="#{empty productList}" />
+
+        <h:dataTable value="#{productList}" var="p" rendered="#{not empty productList}">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Id" />
+                </f:facet>
+                <h:outputText value="#{p.id}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Name" />
+                </f:facet>
+                <h:outputText value="#{p.name}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="SKU" />
+                </f:facet>
+                <h:outputText value="#{p.sku}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Price" />
+                </f:facet>
+                <h:outputText value="#{p.price}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Registry Date" />
+                </f:facet>
+                <!--h:outputText value="#{p.registryDate}" /--><!-- Show the date from our region -->
+                <h:outputText value="#{p.registryDate}">
+                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Edit (post)" />
+                </f:facet>
+                <h:form id="editFrm">
+                    <h:commandLink value="Edit" action="#{productController.edit(p.id)}" />
+                </h:form>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Edit (get)" />
+                </f:facet>
+                    <h:link value="Edit" outcome="form">
+                        <f:param name="id" value="#{p.id}" />
+                    </h:link>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Delete" />
+                </f:facet>
+                <h:form id="deleteFrm">
+                    <h:commandLink value="Delete" action="#{productController.delete(p.id)}"
+                        onclick="return confirm('Are you sure to delete it?')" />
+                </h:form>
+            </h:column>
+        </h:dataTable>
+    </h:panelGrid>
+</h:body>
+</html>
