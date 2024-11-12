@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!-- For JakartaEE 8 version and previous
+    html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" -->
+<!-- For JakartaEE 9 version -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta charset="UTF-8" />
+    <title>Form Product | #{title}</title>
+</h:head>
+<h:body>
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{productController.id}" />
+        <!-- Getting <f:param name="id" value="#{p.id}" /> From index.xhtml and Setting to ProductController.id  -->
+    </f:metadata>
+
+    <h:messages style="color: red;" /><!--Show the error messages from form fields-->
+    <!--Delete required="true" from the fields like in
+        <h:inputText id="price" value="#{product.price}" label="Price" />
+        so in Product.class @NotNull validate the price.
+    -->
+
+    <h:panelGrid border="1">
+
+        <f:facet name="header">
+            #{h1}
+            <br/>
+            <h:outputText value="Form Product | #{h1}" />
+        </f:facet>
+
+        <h:link outcome="index" value="Back" /><!-- Use a method get -->
+
+        <!--#{product.name} calls method product() just 1 time -->
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputLabel value="Name" for="name" />
+                <h:inputText id="name" value="#{product.name}" required="true" label="Name" />
+                <h:message for="name" style="color: red;" />
+
+                <h:outputLabel value="Price" for="price" />
+                <h:inputText id="price" value="#{product.price}" label="Price" />
+                <h:message for="price" style="color: red;" />
+
+                <h:outputLabel value="Sku" for="sku" />
+                <h:inputText id="sku" value="#{product.sku}" required="true" label="SKU" />
+                <h:message for="sku" style="color: red;" />
+
+                <h:outputLabel value="Date" for="registryDate" />
+                <h:inputText id="registryDate" value="#{product.registryDate}" label="Registry Date" required="true" converterMessage="Valid format date yyyy-MM-dd">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+                    <f:passThroughAttribute name="placeholder" value="yyyy-MM-dd" />
+                    <!--f:passThroughAttribute name="type" value="date" /--><!--Show Calendar-->
+                </h:inputText>
+                <h:message for="registryDate" style="color: red;" />
+
+                <h:outputLabel value="Category" for="category" />
+                <h:selectOneMenu id="category" value="#{product.category}">
+                    <f:selectItem itemLabel="--- Select Category ---" itemValue="#{null}" />
+                    <!--f:selectItems value="#{categories}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" /--><!-- categories is from com.kevinpina.controllers.ProductController.getCategories() -->
+                    <f:selectItems value="#{categories}" var="c" itemLabel="#{c.name}" />
+                    <f:converter binding="#{categoryConverter}" />
+                </h:selectOneMenu>
+                <h:message for="category" style="color: red;" />
+
+                <h:commandButton value="#{product.id > 0 ? 'Update' : 'Create'}" action="#{productController.save}" />
+                <h:inputHidden value="#{product.id}" />
+                <!--h:inputHidden value="#{product.registryDate}" / -->
+            </h:panelGrid>
+        </h:form>
+
+    </h:panelGrid>
+</h:body>
+</html>

@@ -132,6 +132,9 @@
                 </interfaces>
 
         $ sh $WILDFLY_HOME/bin/jboss-cli.sh --connect --command=:reload
+        
+# To watch logs WILDFLY
+    $ tail -100f $WILDFLY_HOME/standalone/log/server.log
 ```
 
 # START WILDFlY
@@ -180,7 +183,7 @@ $ mvn dependency:purge-local-repository clean install
 ```
 	$ curl http://localhost:9990/console/
 	
-	$ curl http://127.0.0.1:8080/jakarta-ee10-webapp-jsf-cdi/
+	$ curl http://localhost:8080/jakarta-ee9-jsf-cdi-form-create/
 ```
 
 # DEBUG REMOTELY TOMCAT
