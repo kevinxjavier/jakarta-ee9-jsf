@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      template="/WEB-INF/layouts/main.xhtml">
+
+    <ui:define name="content">
+        <h:panelGrid border="1" class="table">
+
+            <f:facet name="header">
+                #{h1}
+                <br/>
+                <h:outputText value="#{h1}" /><!-- com.kevinpina.controllers.ProductController.header1() -->
+                <br/>
+                <h:outputLabel value="#{h1}"/>
+            </f:facet>
+
+            <h:form id="createFrm">
+                <h:commandButton value="#{messageMyLanguage['product.button.create']}" action="form.xhtml" class="btn btn-primary my-2"/>
+                <br/>
+                <h:commandLink value="Create Product" action="form.xhtml" /><!-- Use a method post -->
+            </h:form>
+
+            <h:outputText value="No items was found!" rendered="#{empty productList}" class="alert alert-warning" />
+
+            <h:dataTable value="#{productList}" var="p" rendered="#{not empty productList}" class="table table-hover table-striped">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id" />
+                    </f:facet>
+                    <h:outputText value="#{p.id}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name" />
+                    </f:facet>
+                    <h:outputText value="#{p.name}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="SKU" />
+                    </f:facet>
+                    <h:outputText value="#{p.sku}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{messageMyLanguage['product.price']}" />
+                    </f:facet>
+                    <h:outputText value="#{p.price}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{messageMyLanguage['product.date']}" />
+                    </f:facet>
+                    <!--h:outputText value="#{p.registryDate}" /--><!-- Show the date from our region -->
+                    <h:outputText value="#{p.registryDate}">
+                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Category" />
+                    </f:facet>
+                    <h:outputText value="#{p.category.name}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{messageMyLanguage['product.button.edit']} (post)" />
+                    </f:facet>
+                    <h:form id="editFrm">
+                        <h:commandLink value="#{messageMyLanguage['product.button.edit']}" action="#{productController.edit(p.id)}" class="btn btn-sm btn-success" />
+                    </h:form>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Edit (get)" />
+                    </f:facet>
+                        <h:link value="Edit" outcome="form" class="btn btn-sm btn-info">
+                            <f:param name="id" value="#{p.id}" />
+                        </h:link>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Delete" />
+                    </f:facet>
+                    <h:form id="deleteFrm">
+
+                        <h:commandLink value="Delete" action="#{productController.delete(p)}" class="btn btn-sm btn-danger"
+                            onclick="return confirm('Are you sure to delete it?')" />
+                    </h:form>
+                </h:column>
+            </h:dataTable>
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>
